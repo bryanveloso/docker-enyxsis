@@ -1,14 +1,5 @@
 FROM alpine:3.7
 
-LABEL MYSQL_HOST="Hostname of the MySQL database." \
-  MYSQL_DB="Name of the MySQL database." \
-  MYSQL_USER="Database username for authentication." \
-  MYSQL_PWD="Password for authenticating with database." \
-  SVR_LOGIN_ADDR="Login Server IP address or DNS name." \
-  SVR_CHAR_ADDR="Char Server IP address or DNS name." \
-  SVR_MAP_ADDR="Map Server IP address or DNS name." \
-  INSTALLER_PWD="Installer password."
-
 ENV PHP_FPM_USER=www \
   PHP_FPM_GROUP=www \
   PHP_FPM_LISTEN_MODE=0660 \
@@ -21,12 +12,12 @@ ENV PHP_FPM_USER=www \
   PHP_ERROR_REPORTING=E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR \
   PHP_CGI_FIX_PATHINFO=0
 
-RUN mkdir -p /var/www/fluxcp \
+RUN mkdir -p /var/www/html \
   && mkdir -p /var/log/supervisor \
   && mkdir -p /etc/supervisord.d \
   && apk update \
   && apk add --no-cache nginx php5-fpm php5-pdo php5-pdo_mysql php5-gd gd tidyhtml git nano dos2unix mysql-client bind-tools p7zip supervisor \
-  && git clone https://github.com/bryanveloso/FluxCP.git /var/www/fluxcp \
+  && git clone https://github.com/bryanveloso/FluxCP.git /var/www/html \
   && adduser -D -g 'www' www \
   && chown -R www:www /var/lib/nginx \
   && chown -R www:www /var/www

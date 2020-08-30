@@ -56,11 +56,7 @@ services:
   web:
     build: ./web
     image: web:latest
-    environment: 
-      MYSQL_HOST: database
-      SVR_LOGIN_ADDR: login
-      SVR_CHAR_ADDR: char
-      SVR_MAP_ADDR: map
+    restart: always
     depends_on:
       - core
       - database
