@@ -53,6 +53,21 @@ services:
     ports: 
       - 6121:6121
 
+  web:
+    build: ./web
+    image: web:latest
+    environment: 
+      MYSQL_HOST: database
+      SVR_LOGIN_ADDR: login
+      SVR_CHAR_ADDR: char
+      SVR_MAP_ADDR: map
+    depends_on:
+      - core
+      - database
+    ports:
+      - 80:80
+      - 443:443
+
 volumes: 
   sql_scripts:
   server_db:
