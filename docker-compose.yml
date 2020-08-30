@@ -1,0 +1,58 @@
+version: '3'
+
+services: 
+  core:
+    build: ./server
+    image: core:latest
+    volumes: 
+      - sql_scripts:/server/sql-files
+
+  database:
+    image: mysql:5.7
+    restart: always
+    volumes: 
+      - sql_scripts:/docker-entrypoint-initdb.d
+      - server_db:/var/lib/mysql
+    environment: 
+      MYSQL_DATABASE: ragnarok
+      MYSQL_USER: ragnarok
+      MYSQL_PASSWORD: ragnarok
+      MYSQL_ROOT_PASSWORD: secret
+    depends_on: 
+      - core
+    ports:
+      - 3306:3306
+
+  map:
+    image: core
+    restart: always
+    command: ./wait.sh database:3306 -- "./map-server"
+    depends_on: 
+      - core
+      - database
+    ports:
+      - 5121:5121
+
+  login:
+    image: core
+    restart: always
+    command: ./wait.sh database:3306 -- "./login-server"
+    depends_on: 
+      - core
+      - database
+    ports:
+      - 6900:6900
+
+  char:
+    image: core
+    restart: always
+    command: ./wait.sh database:3306 -- "./char-server"
+    depends_on: 
+      - core
+      - database
+    ports: 
+      - 6121:6121
+
+volumes: 
+  sql_scripts:
+  server_db:
