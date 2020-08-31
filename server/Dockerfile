@@ -15,8 +15,10 @@ RUN apt-get update && apt-get -y install \
   libpcre3-dev \
   git
 
-ADD https://api.github.com/repos/bryanveloso/rathena/git/refs/heads/renova version.json
 RUN git clone --shallow-since 2020-01-01 https://github.com/bryanveloso/rathena.git .
+
+ADD https://api.github.com/repos/bryanveloso/rathena/git/refs/heads/renova version.json
+RUN git pull origin renova
 
 COPY ./wait.sh /server/wait.sh
 
