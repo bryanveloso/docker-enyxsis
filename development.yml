@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  flux:
+    volumes:
+      - ~/Code/bryanveloso/FluxCP:/var/www/html:cached
+    ports:
+      - 8080:80
