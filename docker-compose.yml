@@ -60,7 +60,6 @@ services:
       GIT_EMAIL: bryan@avalonstar.com
       GIT_NAME: Bryan Veloso
       GIT_REPO: https://github.com/bryanveloso/FluxCP/
-      GIT_BRANCH: dockerize
       DOMAIN: renova.avalonstar.tv
     ports:
       - 80:80
