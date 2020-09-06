@@ -28,7 +28,7 @@ services:
   map:
     image: core
     restart: always
-    command: ./wait.sh database:3306 -- "./map-server"
+    command: ./wait.sh database:3306 -t 0 -- "./map-server"
     depends_on: 
       - core
       - database
@@ -38,7 +38,7 @@ services:
   login:
     image: core
     restart: always
-    command: ./wait.sh database:3306 -- "./login-server"
+    command: ./wait.sh database:3306 -t 0 -- "./login-server"
     depends_on: 
       - core
       - database
@@ -48,7 +48,7 @@ services:
   char:
     image: core
     restart: always
-    command: ./wait.sh database:3306 -- "./char-server"
+    command: ./wait.sh database:3306 -t 0 -- "./char-server"
     depends_on: 
       - core
       - database
