@@ -17,8 +17,8 @@ RUN apt-get update && apt-get -y install \
 
 RUN git clone --shallow-since 2020-01-01 https://github.com/bryanveloso/rathena.git .
 
-ADD https://api.github.com/repos/bryanveloso/rathena/git/refs/heads/renova version.json
-RUN git pull origin renova
+ADD https://api.github.com/repos/bryanveloso/rathena/git/refs/heads/enyxsis version.json
+RUN git pull origin enyxsis
 
 COPY ./wait.sh /server/wait.sh
 
