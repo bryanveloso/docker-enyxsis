@@ -15,14 +15,14 @@ RUN apt-get update && apt-get -y install \
   libpcre3-dev \
   git
 
-RUN git clone --shallow-since 2020-01-01 https://github.com/bryanveloso/rathena.git .
+RUN git clone --depth 1 https://github.com/bryanveloso/rathena.git .
 
 ADD https://api.github.com/repos/bryanveloso/rathena/git/refs/heads/enyxsis version.json
 RUN git pull origin enyxsis
 
 COPY ./wait.sh /server/wait.sh
 
-RUN ./configure --enable-packetver=${PACKETVER} \
+RUN ./configure --enable-packetver=${PACKETVER} --enable-vip=yes \
   && make clean \
   && make server \
   && groupadd -g 999 appuser \
