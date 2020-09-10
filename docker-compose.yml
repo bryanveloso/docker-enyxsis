@@ -20,10 +20,18 @@ services:
       MYSQL_USER: ragnarok
       MYSQL_PASSWORD: ragnarok
       MYSQL_ROOT_PASSWORD: secret
-    depends_on: 
-      - core
     ports:
       - 3306:3306
+
+  graphql:
+    image: bryanveloso/enyxsis-graphql-server:latest
+    restart: always
+    environment: 
+      DB_HOST: database
+    depends_on:
+      - database
+    ports:
+      - 4000:4000
 
   map:
     image: core
@@ -65,7 +73,7 @@ services:
       DOMAIN: renova.avalonstar.tv
     ports:
       - 80:80
-      - 443:443
+      - 443:443    
 
 volumes: 
   sql_scripts:
