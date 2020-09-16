@@ -33,15 +33,15 @@ services:
     ports:
       - 4000:4000
 
-  map:
+  char:
     image: core
     restart: always
-    command: ./wait.sh database:3306 -t 0 -- "./map-server"
+    command: ./wait.sh database:3306 -t 0 -- "./char-server"
     depends_on: 
       - core
       - database
     ports:
-      - 5121:5121
+      - 6121:6121
 
   login:
     image: core
@@ -53,15 +53,28 @@ services:
     ports:
       - 6900:6900
 
-  char:
+  map:
     image: core
     restart: always
-    command: ./wait.sh database:3306 -t 0 -- "./char-server"
+    command: ./wait.sh database:3306 -t 0 -- "./map-server"
     depends_on: 
       - core
       - database
-    ports: 
-      - 6121:6121
+    ports:
+      - 5121:5121
+          
+  status:
+    build: ./status
+    image: status:latest
+    environment: 
+      CHAR_IP: char
+      CHAR_PORT: 6121
+      LOGIN_IP: login
+      LOGIN_PORT: 6900
+      MAP_IP: map
+      MAP_PORT: 5121
+    ports:
+      - 3000:3000
 
   flux:
     image: richarvey/nginx-php-fpm:latest
