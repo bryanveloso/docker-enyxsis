@@ -1,26 +1,38 @@
-const express = require('express')
-const asyncHandler = require('express-async-handler')
-const router = express.Router();
-const isPortReachable = require('is-port-reachable')
-const app = express()
+const express = require('express');
+const app = express();
+
+const { SocketClientTCP } = require('netlinkwrapper');
 
 const {
   CHAR_IP,
-  CHAR_PORT,
+  CHAR_PORT = 6121,
   LOGIN_IP,
-  LOGIN_PORT,
+  LOGIN_PORT = 6900,
   MAP_IP,
-  MAP_PORT,
-} = process.env
+  MAP_PORT = 5121,
+} = process.env;
 
-router.get('/', asyncHandler(async (req, res, next) => {
-  const login = await isPortReachable(LOGIN_PORT, { host: LOGIN_IP });
-  const char = await isPortReachable(CHAR_PORT, { host: CHAR_IP });
-  const map = await isPortReachable(MAP_PORT, { host: MAP_IP });
-  res.json({ login, char, map })
-}))
+const checkPort = (port, host) => {
+  let result = null;
+  try {
+    const server = new SocketClientTCP(port, host);
+    server.disconnect();
+    result = true;
+  } catch (e) {
+    result = false;
+  }
 
-const port = process.env.PORT || 3000;
+  return result;
+};
+
+app.get('/', (req, res, next) => {
+  const login = checkPort(LOGIN_PORT, LOGIN_IP);
+  const char = checkPort(CHAR_PORT, CHAR_IP);
+  const map = checkPort(MAP_PORT, MAP_IP);
+  res.json({ status: { login, char, map } });
+});
+
+const port = process.env.PORT || 3030;
 app.listen(port, function () {
-  console.log(`Status listening on port ${port}!`)
-})
+  console.log(`Status listening on port ${port}!`);
+});
