@@ -73,6 +73,7 @@ services:
       LOGIN_PORT: 6900
       MAP_IP: map
       MAP_PORT: 5121
+      PORT: 3000
     ports:
       - 3000:3000
 
