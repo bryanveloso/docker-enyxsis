@@ -89,7 +89,7 @@ services:
       - 8088:80
       - 8443:443    
 
-  reverse-proxy:
+  traefik:
     image: traefik:latest
     command: --api.insecure=true --providers.docker
     ports:
