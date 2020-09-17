@@ -86,8 +86,8 @@ services:
       GIT_REPO: https://github.com/bryanveloso/FluxCP/
       DOMAIN: renova.avalonstar.tv
     ports:
-      - 80:80
-      - 443:443    
+      - 8088:80
+      - 8443:443    
 
 volumes: 
   sql_scripts:
