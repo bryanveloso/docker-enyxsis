@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-
-const { SocketClientTCP } = require('netlinkwrapper');
+const net = require('net');
 
 const {
   CHAR_IP,
@@ -15,9 +14,10 @@ const {
 const checkPort = (port, host) => {
   let result = null;
   try {
-    const server = new SocketClientTCP(port, host);
-    server.disconnect();
-    result = true;
+    const client = new net.Socket()
+    client.connect(port, host)
+    result = true
+    client.destroy()
   } catch (e) {
     result = false;
   }
