@@ -25,8 +25,8 @@ const checkPort = (port, host) => {
   return result
 }
 
-app.use(cors())
 const app = express()
+app.use(cors())
 
 app.get('/', (req, res, next) => {
   const login = checkPort(LOGIN_PORT, LOGIN_IP)
