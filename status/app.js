@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const net = require('net');
 
 const {
@@ -24,6 +23,9 @@ const checkPort = (port, host) => {
 
   return result;
 };
+
+const app = express();
+app.use(cors());
 
 app.get('/', (req, res, next) => {
   const login = checkPort(LOGIN_PORT, LOGIN_IP);
