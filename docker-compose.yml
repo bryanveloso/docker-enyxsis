@@ -33,9 +33,9 @@ services:
     ports:
       - 4000:4000
     labels: 
-      - 'traefik.backend=api'
-      - 'traefik.port=4000'
-      - 'traefik.frontend.rule=Host:api.enyxsis.com'
+      - traefik.backend=api
+      - traefik.port=4000
+      - traefik.frontend.rule=Host:api.enyxsis.com
 
   char:
     image: core
@@ -81,9 +81,10 @@ services:
     ports:
       - 3000:3000
     labels:
-      - 'traefik.backend=status'
-      - 'traefik.port=3000'
-      - 'traefik.frontend.rule=Host:stauts.enyxsis.com'
+      - traefik.enable=true
+      - traefik.backend=status
+      - traefik.port=3000
+      - traefik.frontend.rule=Host:stauts.enyxsis.com
 
   flux:
     image: richarvey/nginx-php-fpm:latest
@@ -96,12 +97,20 @@ services:
     ports:
       - 8088:80
       - 8443:443    
+    labels: 
+      - traefik.backend=api
+      - traefik.port=4000
+      - traefik.frontend.rule=Host:api.enyxsis.com
+
 
   traefik:
     image: traefik:latest
+    restart: always
     command: --api.insecure=true --providers.docker
     volumes: 
       - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+    environment:
+      - TZ=${TZ}      
     ports:
       - 80:80
       - 443:443
