@@ -34,9 +34,9 @@ services:
       - 4000:4000
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.echo.rule=Host(`api.enyxsis.com`)"
-      - "traefik.http.routers.echo.entrypoints=secure"
-      - "traefik.http.routers.echo.tls.certresolver=le"      
+      - "traefik.http.routers.api.rule=Host(`api.enyxsis.com`)"
+      - "traefik.http.routers.api.entrypoints=secure"
+      - "traefik.http.routers.api.tls.certresolver=le"      
 
   char:
     image: core
@@ -83,9 +83,9 @@ services:
       - 3000:3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.echo.rule=Host(`status.enyxsis.com`)"
-      - "traefik.http.routers.echo.entrypoints=secure"
-      - "traefik.http.routers.echo.tls.certresolver=le"      
+      - "traefik.http.routers.status.rule=Host(`status.enyxsis.com`)"
+      - "traefik.http.routers.status.entrypoints=secure"
+      - "traefik.http.routers.status.tls.certresolver=le"      
 
   flux:
     image: richarvey/nginx-php-fpm:latest
@@ -100,9 +100,9 @@ services:
       - 8443:443    
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.echo.rule=Host(`oldcp.enyxsis.com`)"
-      - "traefik.http.routers.echo.entrypoints=secure"
-      - "traefik.http.routers.echo.tls.certresolver=le"      
+      - "traefik.http.routers.flux.rule=Host(`oldcp.enyxsis.com`)"
+      - "traefik.http.routers.flux.entrypoints=secure"
+      - "traefik.http.routers.flux.tls.certresolver=le"      
 
   traefik:
     image: traefik:latest
