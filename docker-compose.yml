@@ -32,6 +32,11 @@ services:
       - database
     ports:
       - 4000:4000
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`api.enyxsis.com`)"
+      - "traefik.http.routers.api.entrypoints=secure"
+      - "traefik.http.routers.api.tls.certresolver=le"      
 
   char:
     image: core
@@ -76,6 +81,11 @@ services:
       PORT: 3000
     ports:
       - 3000:3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.status.rule=Host(`status.enyxsis.com`)"
+      - "traefik.http.routers.status.entrypoints=secure"
+      - "traefik.http.routers.status.tls.certresolver=le"      
 
   flux:
     image: richarvey/nginx-php-fpm:latest
@@ -86,9 +96,41 @@ services:
       GIT_REPO: https://github.com/bryanveloso/FluxCP/
       DOMAIN: renova.avalonstar.tv
     ports:
+      - 8088:80
+      - 8443:443    
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.flux.rule=Host(`oldcp.enyxsis.com`)"
+      - "traefik.http.routers.flux.entrypoints=secure"
+      - "traefik.http.routers.flux.tls.certresolver=le"      
+
+  traefik:
+    image: traefik:latest
+    restart: always
+    volumes: 
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
       - 80:80
-      - 443:443    
+      - 443:443
+      - 8080:8080
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)"
+      - "traefik.http.routers.http_catchall.entrypoints=insecure"
+      - "traefik.http.routers.http_catchall.middlewares=https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.enyxsis.com`)"
+      - "traefik.http.routers.traefik.entrypoints=secure"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=le"      
 
 volumes: 
   sql_scripts:
   server_db:
+
+networks: 
+  default: 
+    external:
+      name: "traefik-network"
