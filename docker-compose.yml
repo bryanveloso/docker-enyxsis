@@ -16,7 +16,7 @@ services:
       - server_db:/var/lib/mysql
       - ./database/my.cnf:/etc/my.cnf
     env_file: 
-      - .env/production
+      - .production.env
 
   graphql:
     image: bryanveloso/enyxsis-graphql-server:latest
