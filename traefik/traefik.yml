@@ -8,6 +8,12 @@ entryPoints:
     address: ":80"
   secure:
     address: ":443"
+  login:
+    address: ":6900"
+  map: 
+    address: ":5121"
+  char:
+    address: ":6121"
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
