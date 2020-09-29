@@ -121,7 +121,8 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`traefik.enyxsis.com`)"
       - "traefik.http.routers.traefik.entrypoints=secure"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.tls.certresolver=le"      
+      - "traefik.http.routers.traefik.tls.certresolver=le"
+      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
 
 volumes: 
   sql_scripts:
