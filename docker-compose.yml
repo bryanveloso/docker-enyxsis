@@ -38,8 +38,6 @@ services:
     depends_on: 
       - core
       - database
-    ports:
-      - 6121:6121
     labels:
       - "traefik.enable=true"
       - "traefik.tcp.routers.char.entrypoints=char"
