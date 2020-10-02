@@ -106,7 +106,7 @@ services:
       - "traefik.http.routers.adminer.rule=Host(`adminer.enyxsis.com`)"
       - "traefik.http.routers.adminer.entrypoints=secure"
       - "traefik.http.routers.adminer.tls.certresolver=le"      
-      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
+      - "traefik.http.routers.adminer.middlewares=ipwhitelist@docker"
 
   traefik:
     image: traefik:latest
@@ -130,6 +130,7 @@ services:
       - "traefik.http.routers.traefik.entrypoints=secure"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.tls.certresolver=le"
+      - "traefik.http.routers.traefik.middlewares=ipwhitelist@docker"
       - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
 
 volumes: 
