@@ -38,9 +38,8 @@ services:
     depends_on: 
       - core
       - database
-    labels:
-      - "traefik.enable=true"
-      - "traefik.tcp.routers.char.entrypoints=char"
+    ports:
+      - 6121:6121
 
   login:
     image: core
@@ -49,10 +48,9 @@ services:
     depends_on: 
       - core
       - database
-    labels:
-    - "traefik.enable=true"
-    - "traefik.tcp.routers.login.entrypoints=login"
-
+    ports:
+      - 6900:6900
+      
   map:
     image: core
     restart: always
@@ -60,10 +58,9 @@ services:
     depends_on: 
       - core
       - database
-    labels:
-      - "traefik.enable=true"
-      - "traefik.tcp.routers.map.entrypoints=map"
-
+    ports:
+      - 5121:5121
+      
   status:
     build: ./status
     image: status:latest
@@ -120,9 +117,6 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 5121:5121
-      - 6121:6121
-      - 6900:6900
       - 8080:8080
 
     labels:
