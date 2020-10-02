@@ -29,7 +29,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.enyxsis.com`)"
       - "traefik.http.routers.api.entrypoints=secure"
-      - "traefik.http.routers.api.tls.certresolver=le"      
+      - "traefik.http.routers.api.tls.certresolver=cloudflare"      
 
   char:
     image: core
@@ -76,7 +76,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.status.rule=Host(`status.enyxsis.com`)"
       - "traefik.http.routers.status.entrypoints=secure"
-      - "traefik.http.routers.status.tls.certresolver=le"      
+      - "traefik.http.routers.status.tls.certresolver=cloudflare"      
 
   flux:
     image: richarvey/nginx-php-fpm:latest
@@ -89,7 +89,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.flux.rule=Host(`oldcp.enyxsis.com`)"
       - "traefik.http.routers.flux.entrypoints=secure"
-      - "traefik.http.routers.flux.tls.certresolver=le"      
+      - "traefik.http.routers.flux.tls.certresolver=cloudflare"      
 
   adminer:
     image: adminer:latest
@@ -105,7 +105,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.adminer.rule=Host(`adminer.enyxsis.com`)"
       - "traefik.http.routers.adminer.entrypoints=secure"
-      - "traefik.http.routers.adminer.tls.certresolver=le"      
+      - "traefik.http.routers.adminer.tls.certresolver=cloudflare"      
       - "traefik.http.routers.adminer.middlewares=ipwhitelist@docker"
 
   traefik:
@@ -131,7 +131,7 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`traefik.enyxsis.com`)"
       - "traefik.http.routers.traefik.entrypoints=secure"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.tls.certresolver=le"
+      - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
       - "traefik.http.routers.traefik.middlewares=ipwhitelist@docker"
       - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194/32"
       - "traefik.http.middlewares.ipwhitelist.ipwhitelist.ipstrategy.depth=2"
