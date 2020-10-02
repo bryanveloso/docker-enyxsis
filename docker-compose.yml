@@ -98,7 +98,7 @@ services:
       - 8081:8080
     environment: 
       - ADMINER_DEFAULT_SERVER=database
-      - ADMINER_DESIGN=pepa-linha-dark
+      - ADMINER_DESIGN=pepa-linha
     depends_on: 
       - database
     labels:
@@ -106,7 +106,6 @@ services:
       - "traefik.http.routers.adminer.rule=Host(`adminer.enyxsis.com`)"
       - "traefik.http.routers.adminer.entrypoints=secure"
       - "traefik.http.routers.adminer.tls.certresolver=cloudflare"      
-      - "traefik.http.routers.adminer.middlewares=ipwhitelist@docker"
 
   traefik:
     image: traefik:latest
@@ -132,9 +131,6 @@ services:
       - "traefik.http.routers.traefik.entrypoints=secure"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik.middlewares=ipwhitelist@docker"
-      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194/32"
-      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.ipstrategy.depth=2"
 
 volumes: 
   sql_scripts:
