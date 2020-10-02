@@ -113,6 +113,7 @@ services:
     restart: always
     volumes: 
       - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/traefik.log:/etc/traefik/log/traefik.log:ro
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 80:80
