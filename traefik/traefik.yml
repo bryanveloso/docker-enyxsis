@@ -1,19 +1,27 @@
 log:
   level: DEBUG
   filepath: "/etc/traefik/log/traefik.log"
+
 api:
   dashboard: true
+
 entryPoints:
   insecure:
     address: ":80"
   secure:
     address: ":443"
-  login:
-    address: ":6900"
-  map: 
-    address: ":5121"
-  char:
-    address: ":6121"
+    http:
+      tls:
+        certResolver: cloudflare
+        domains:
+          - main: landale.app
+            sans:
+                - "*.landale.app"
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1/32"
+        - "104.60.90.194/32"
+
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
@@ -22,10 +30,20 @@ providers:
   file:
     filename: "/etc/traefik/dynamic_config.yml"
     watch: true
+
 certificatesResolvers:
-  le:
+  cloudflare:
     acme:
       email: bryan@avalonstar.com
-      storage: /acme.json
+      storage: acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"
+  http:
+    acme:
+      email: bryan@avalonstar.com
+      storage: acme.json
       httpChallenge:
         entryPoint: insecure
