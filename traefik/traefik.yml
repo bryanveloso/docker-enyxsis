@@ -53,3 +53,12 @@ accesslog:
   filePath: "/logs/access.log"
   bufferingsize: 5000
   format: json
+  filters:
+    statusCodes:
+      - "400-499"
+  fields:
+    defaultMode: keep
+    headers:
+      defaultMode: keep
+      names:
+        CF-Connecting-IP: keep
