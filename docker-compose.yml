@@ -79,7 +79,7 @@ services:
       - "traefik.http.routers.status.tls.certresolver=cloudflare"      
 
   flux:
-    image: richarvey/nginx-php-fpm:latest
+    image: richarvey/nginx-php-fpm:1.10.3
     restart: always
     environment:
       GIT_EMAIL: bryan@avalonstar.com
