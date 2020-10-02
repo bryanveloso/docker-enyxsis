@@ -131,7 +131,7 @@ services:
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.tls.certresolver=le"
       - "traefik.http.routers.traefik.middlewares=ipwhitelist@docker"
-      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
+      - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194/32"
 
 volumes: 
   sql_scripts:
