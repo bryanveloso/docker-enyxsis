@@ -88,7 +88,6 @@ services:
       GIT_EMAIL: bryan@avalonstar.com
       GIT_NAME: Bryan Veloso
       GIT_REPO: https://github.com/bryanveloso/FluxCP/
-      DOMAIN: renova.avalonstar.tv
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.flux.rule=Host(`oldcp.enyxsis.com`)"
@@ -105,9 +104,9 @@ services:
       - ADMINER_DESIGN=pepa-linha-dark
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.flux.rule=Host(`adminer.enyxsis.com`)"
-      - "traefik.http.routers.flux.entrypoints=secure"
-      - "traefik.http.routers.flux.tls.certresolver=le"      
+      - "traefik.http.routers.adminer.rule=Host(`adminer.enyxsis.com`)"
+      - "traefik.http.routers.adminer.entrypoints=secure"
+      - "traefik.http.routers.adminer.tls.certresolver=le"      
       - "traefik.http.middlewares.ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, 104.60.90.194"
 
   traefik:
