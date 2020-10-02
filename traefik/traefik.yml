@@ -62,4 +62,3 @@ accesslog:
       defaultMode: keep
       names:
         CF-Connecting-IP: keep
-        X-Forwarded-For: keep
