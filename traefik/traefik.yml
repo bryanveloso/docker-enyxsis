@@ -1,7 +1,3 @@
-log:
-  level: DEBUG
-  filepath: "/etc/traefik/log/traefik.log"
-
 api:
   dashboard: true
 
@@ -35,7 +31,7 @@ certificatesResolvers:
   cloudflare:
     acme:
       email: bryan@avalonstar.com
-      storage: acme.json
+      storage: /letsencrypt/acme.json
       dnsChallenge:
         provider: cloudflare
         resolvers:
@@ -44,6 +40,16 @@ certificatesResolvers:
   http:
     acme:
       email: bryan@avalonstar.com
-      storage: acme.json
+      storage: /letsencrypt/acme.json
       httpChallenge:
         entryPoint: insecure
+
+log:
+  level: DEBUG
+  filePath: "/logs/traefik.log"
+  format: json
+
+accesslog:
+  filePath: "/logs/access.log"
+  bufferingsize: 5000
+  format: json
